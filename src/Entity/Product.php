@@ -7,21 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *     normalizationContext={"groups"={"list", "item"}},
- *     itemOperations={
- *          "get"={
- *              "normalization_context"={"groups"={"item"}}
- *              }
- *      },
- *     collectionOperations={
- *     "post",
- *          "get"={
- *              "normalization_context"={"groups"={"list"}},
- *
- *      }
- *     }
- * )
+ * @ApiResource
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  *
  */
@@ -31,21 +17,23 @@ class Product {
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"list", "item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list", "item"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
-     * @Groups("item")
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $notes;
 
     public function getId(): ?int {
         return $this->id;
@@ -70,4 +58,19 @@ class Product {
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getNotes(): string {
+        return $this->notes;
+    }
+
+    /**
+     * @param string $notes
+     */
+    public function setNotes(string $notes): void {
+        $this->notes = $notes;
+    }
+
 }
